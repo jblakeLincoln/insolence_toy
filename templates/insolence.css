@@ -1,6 +1,6 @@
 .insolence_area {
 	width: 640px;
-	height: 480px;
+	height: 360px;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
@@ -29,7 +29,7 @@
 	width: 100%;
 	height: auto;
 }
-
+#loading_wrapper { display: inline-block; }
 #insolence_loading_element {
 	display: table;
 	background-color: black;
@@ -126,4 +126,31 @@
 @keyframes rotation {
   from {transform: rotate(0deg);}
   to {transform: rotate(360deg);}
+}
+
+.CodeMirror {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	font-weight: normal;
+}
+
+#output_area{
+	margin-left: auto;
+	margin-right: auto;
+	width: 640px;
+}
+
+#output_area textarea {
+	float: left;
+	width: 480px;
+}
+
+#output_area #shader_submit {
+	float: right;
+	cursor: pointer;
+
+	min-width: 80px;
+	border: 1px solid black;
+	vertical-align: middle;
 }

@@ -87,7 +87,7 @@ function webgl_configure
 	local webgl_command="\
 emcc \
 libinsolence.bc insolence_toy.bc \
---preload-file shaders --preload-file assets --memory-init-file 1 \
+--preload-file shaders --preload-file assets --bind --memory-init-file 1 \
 -s USE_SDL=2 -s USE_FREETYPE=1 -s TOTAL_MEMORY=32777216 \
 -o insolence_toy.js"
 
@@ -107,13 +107,13 @@ libinsolence.bc insolence_toy.bc \
 
 	local IFS=''
 	local i=0
-	while read line; do
+	while read -r line; do
 		i=$((i + 1))
 		if [ $i -eq 1 ]; then
 			echo "var project_name = \"insolence_toy\"" > "insolence.js"
 			continue;
 		fi
-		echo -e "$line" >> "insolence.js"
+		echo "$line" >> "insolence.js"
 	done < "../templates/insolence.js"
 
 	if [ "$RUN_AFTER_BUILD" == "true" ]; then

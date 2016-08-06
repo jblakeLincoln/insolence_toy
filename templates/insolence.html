@@ -3,7 +3,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" type="text/css" href="codemirror.css">
 	<link rel="stylesheet" type="text/css" href="insolence.css">
+	<script src="codemirror.js"></script>
+	<script src="clike.js"></script>
 </head>
 <title>Insolence Game</title>
 <body>
@@ -27,7 +30,12 @@
 	<canvas id="insolence_canvas" class="insolence_area"
 		oncontextmenu="event.preventDefault()">
 	</canvas>
-	<textarea id="insolence_output" rows="8"></textarea>
+	<textarea id="shader_field" rows="8"></textarea>
+	<div id="output_area">
+		<textarea id="shader_output"></textarea>
+		<div id="shader_submit">Submit<div>
+	</div>
+
 	<script type="text/javascript" src="insolence.js"
 		onload="insolence_run()"></script>
 </div>

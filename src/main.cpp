@@ -1,62 +1,35 @@
 #include <insolence/insolence.h>
 
-#include "render_manager_quads.h"
-#include "component_quad.h"
+#include "game.h"
 
-const int WINDOW_WIDTH = 640;
-const int WINDOW_HEIGHT = 480;
+#ifdef INSOLENCE_WEBGL
+#include <emscripten/bind.h>
+#endif
 
-struct Game : BaseGameWorld
-{
-	Camera *camera;
-	RenderManagerQuads *renderer;
-
-	Entity *quad;
-
-	void Initialise()
-	{
-		/*
-		 * Create a renderer, and set up our Quad system so the
-		 * Quad component can be used.
-		 */
-		renderer = new RenderManagerQuads();
-		entity_manager->AddRenderSystem<SystemQuads>(renderer);
-
-		/*
-		 * Camera setup for a full screen quad.
-		 * This could just be 1x1 - but we might add more quads later.
-		 */
-		camera = new Camera(GetWindow(), Camera::Type::ORTHO);
-		camera->Pan(glm::vec3(-WINDOW_WIDTH / 2.f, -WINDOW_HEIGHT/ 2.f, 0));
-		camera->pos.MoveZ(1);
-
-		/* Create our quad and make it the size of the screen. */
-		quad = entity_manager->CreateEntity();
-		quad->Add<Quad>();
-		quad->Get<Transform>()->SetScaleXY(WINDOW_WIDTH, WINDOW_HEIGHT);
-	}
-
-	void Update(const GameTime &gametime)
-	{
-	}
-
-	void Draw()
-	{
-		renderer->Flush();
-	}
-
-	void Unload()
-	{
-		delete renderer;
-		delete camera;
-	}
-};
-
+Game *game;
 int main()
 {
-	Game *game = new Game();
-	game->Run();
+	game = new Game();
+	game->Run(640, 360);
 
 	delete game;
 	return 0;
 }
+
+#ifdef INSOLENCE_WEBGL
+std::string web_SetFragShader(std::string str)
+{
+	return game->SetQuadFragShader(str);
+}
+
+std::string web_GetFragShader()
+{
+	return game->GetQuadFragShader();
+}
+
+EMSCRIPTEN_BINDINGS(module)
+{
+	emscripten::function("getFragShader", &web_GetFragShader);
+	emscripten::function("setFragShader", &web_SetFragShader);
+}
+#endif

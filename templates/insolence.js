@@ -12,8 +12,19 @@ var insolence_output = document.getElementById('insolence_output') || null;
 var insolence_logo = document.getElementById("insolence_logo");
 var insolence_loading = document.getElementById("insolence_loading_element");
 
+var shader_field = CodeMirror.fromTextArea(document.getElementById("shader_field"), {
+	lineNumbers: true,
+	matchBrackets: true,
+	mode: "text/javascript",
+	theme: "default"
+});
+
+shader_field.setSize(640, 180);
+
 var Module = {
-	preRun: [],
+	preRun: [ (function() {
+		ENV.SDL_EMSCRIPTEN_KEYBOARD_ELEMENT = "insolence_canvas";
+	}) ],
 	postRun: function()
 	{
 		insolence_progress.className += " fade_out";
@@ -23,8 +34,15 @@ var Module = {
 
 		setTimeout(function() {
 			insolence_loading.style.display = "none";
-			insolence_canvas.style.display = "block";
+			insolence_canvas.style.display = "inline-block";
 		}, 600);
+
+		shader_field.getDoc().setValue(Module.getFragShader());
+		document.getElementById("shader_submit").onclick = function() {
+			var str = shader_field.getDoc().getValue();
+			str = str.replace(new RegExp("^\"|\"$", "g"), "");
+			console.log(Module.setFragShader(str));
+		}
 	},
 	print: (function() {
 		var e = document.getElementById("insolence_output") || null;
