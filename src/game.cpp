@@ -76,7 +76,16 @@ std::string Game::SetQuadFragShader(const std::string &str)
 			GL_FRAGMENT_SHADER, ShaderFlags::ADD_HEADER);
 
 	if(temp->GetShaderiv(GL_COMPILE_STATUS) != GL_TRUE)
-		return "Shader compilation unsuccessful!";
+	{
+		std::string output;
+		char buf[1024];
+		int length = 0;
+		glGetShaderInfoLog(temp->GetID(), 1024, &length, buf);
+
+		buf[length - 1] = '\0';
+		output = "Shader compilation FAILED!\n";
+		return output.append(buf);
+	}
 
 	ShaderProgram *program = renderer->shader_program;
 
@@ -90,5 +99,5 @@ std::string Game::SetQuadFragShader(const std::string &str)
 	glUseProgram(program->GetID());
 	Camera::Setup(program);
 
-	return "Shader compilation successful: \n" + str;
+	return "Shader compilation SUCCESSFUL";
 }

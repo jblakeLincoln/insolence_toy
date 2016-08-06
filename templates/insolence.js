@@ -41,7 +41,10 @@ var Module = {
 		document.getElementById("shader_submit").onclick = function() {
 			var str = shader_field.getDoc().getValue();
 			str = str.replace(new RegExp("^\"|\"$", "g"), "");
-			console.log(Module.setFragShader(str));
+
+			var out = document.getElementById("shader_output");
+			out.value = Module.setFragShader(str);
+			out.scrollTop = out.scrollHeight;
 		}
 	},
 	print: (function() {

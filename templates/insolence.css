@@ -143,7 +143,8 @@
 
 #output_area textarea {
 	float: left;
-	width: 480px;
+	width: 520px;
+	height: 140px;
 }
 
 #output_area #shader_submit {
