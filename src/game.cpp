@@ -2,9 +2,6 @@
 
 void Game::Initialise()
 {
-	/* Insolence TODO: GetWindowDimensions. */
-	glm::vec2 window_dimensions = glm::vec2(GetWindow()->GetFramebufferWidth(),
-			GetWindow()->GetFramebufferHeight());
 	/*
 	 * Create a renderer, and set up our Quad system so the
 	 * Quad component can be used.
@@ -12,27 +9,33 @@ void Game::Initialise()
 	renderer = new RenderManagerQuads();
 	entity_manager->AddRenderSystem<SystemQuads>(renderer);
 
+	glm::vec2 window_dimensions = glm::vec2(GetWindow()->GetFramebufferWidth(),
+			GetWindow()->GetFramebufferHeight());
 	/*
 	 * Camera setup for a full screen quad.
 	 * This could just be 1x1 - but we might add more quads later.
 	 */
 	camera = new Camera(GetWindow(), Camera::Type::ORTHO);
-	camera->Pan(glm::vec3(
-				-window_dimensions.x / 2.f,
-				-window_dimensions.y / 2.f,
-				0));
 	camera->pos.MoveZ(1);
 
 	/* Create our quad and make it the size of the screen. */
 	quad = entity_manager->CreateEntity();
 	quad->Add<Quad>();
-	quad->Get<Transform>()->SetScaleXY(window_dimensions.x,
-			window_dimensions.y);
 }
 
 void Game::Update(const GameTime &gametime)
 {
+	/* Insolence TODO: GetWindowDimensions. */
+	glm::vec2 window_dimensions = glm::vec2(GetWindow()->GetFramebufferWidth(),
+			GetWindow()->GetFramebufferHeight());
 
+	quad->Get<Transform>()->SetScaleXY(window_dimensions.x,
+			window_dimensions.y);
+
+	camera->pos.SetPosXY(-window_dimensions.x / 2.f,
+			-window_dimensions.y / 2.f);
+	camera->lookat.SetPosXY(-window_dimensions.x / 2.f,
+			-window_dimensions.y / 2.f);
 }
 
 void Game::Draw()
