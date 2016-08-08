@@ -60,7 +60,24 @@ RenderManagerQuads::RenderManagerQuads()
 	glEnableVertexAttribArray(attrib_pos);
 	glEnableVertexAttribArray(attrib_scale);
 
+	uni_time = glGetUniformLocation(shader_program->GetID(), "elapsed");
 	Camera::Setup(shader_program);
+}
+
+void RenderManagerQuads::ReplaceFragShader(Shader *f)
+{
+	if(frag_shader != NULL)
+		glDetachShader(shader_program->GetID(), frag_shader->GetID());
+
+	glAttachShader(shader_program->GetID(), f->GetID());
+	glLinkProgram(shader_program->GetID());
+	glUseProgram(shader_program->GetID());
+	Camera::Setup(shader_program);
+	uni_time = glGetUniformLocation(shader_program->GetID(), "elapsed");
+
+	if(frag_shader != NULL)
+		delete frag_shader;
+	frag_shader = f;
 }
 
 RenderManagerQuads::~RenderManagerQuads()
@@ -95,6 +112,7 @@ void RenderManagerQuads::Flush()
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+	glUniform1f(uni_time, ++frame_counter);
 
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo_verts);

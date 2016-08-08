@@ -27,10 +27,14 @@ struct RenderManagerQuads
 
 	std::vector<Layout> data;
 
+	int frame_counter = 0;
+	GLint uni_time;
+
 	RenderManagerQuads();
 	~RenderManagerQuads();
 
 	void Add(const glm::vec2 &pos, const glm::vec2 &scale);
+	void ReplaceFragShader(Shader*);
 	void Flush();
 };
 

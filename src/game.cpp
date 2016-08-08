@@ -87,17 +87,7 @@ std::string Game::SetQuadFragShader(const std::string &str)
 		return output.append(buf);
 	}
 
-	ShaderProgram *program = renderer->shader_program;
-
-	glDetachShader(program->GetID(), renderer->frag_shader->GetID());
-	glAttachShader(program->GetID(), temp->GetID());
-
-	delete renderer->frag_shader;
-	renderer->frag_shader = temp;
-
-	glLinkProgram(program->GetID());
-	glUseProgram(program->GetID());
-	Camera::Setup(program);
+	renderer->ReplaceFragShader(temp);
 
 	return "Shader compilation SUCCESSFUL";
 }
