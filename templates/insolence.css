@@ -151,7 +151,18 @@
 	float: right;
 	cursor: pointer;
 
+	padding: 12px;
 	min-width: 80px;
 	border: 1px solid black;
 	vertical-align: middle;
+
+	color: black;
+}
+
+#output_area textarea {
+	resize: vertical;
+}
+
+#output_area textarea:disabled {
+	color: black;
 }
