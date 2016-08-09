@@ -25,17 +25,11 @@ void Game::Initialise()
 
 void Game::Update(const GameTime &gametime)
 {
-	/* Insolence TODO: GetWindowDimensions. */
-	glm::vec2 window_dimensions = glm::vec2(GetWindow()->GetFramebufferWidth(),
-			GetWindow()->GetFramebufferHeight());
+	glm::vec2 window_size = GetWindow()->GetFBSize();
 
-	quad->Get<Transform>()->SetScaleXY(window_dimensions.x,
-			window_dimensions.y);
-
-	camera->pos.SetPosXY(-window_dimensions.x / 2.f,
-			-window_dimensions.y / 2.f);
-	camera->lookat.SetPosXY(-window_dimensions.x / 2.f,
-			-window_dimensions.y / 2.f);
+	quad->Get<Transform>()->SetScaleXY(window_size.x, window_size.y);
+	camera->pos.SetPosXY(-window_size.x / 2.f, -window_size.y / 2.f);
+	camera->lookat.SetPosXY(-window_size.x / 2.f, -window_size.y / 2.f);
 }
 
 void Game::Draw()
