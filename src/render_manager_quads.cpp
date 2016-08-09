@@ -22,12 +22,12 @@ RenderManagerQuads::RenderManagerQuads()
 	frag_shader = Shader::CreateFromFile("assets/quad_shader.fs",
 			GL_FRAGMENT_SHADER, ShaderFlags::ADD_HEADER);
 
-	/*
-	 * Insolence TODO: Easy way of shader error checking.
-	 *    Currently the RenderManager base class has a function that creates
-	 *    a shader pair, but it really should be abstracted out to be a
-	 *    regular ShaderProgram function.
-	 */
+	if(vert_shader->GetCompileStatus() != GL_TRUE)
+		vert_shader->LogCompileInfo("RenderManagerQuads: Vertex ");
+
+	if(frag_shader->GetCompileStatus() != GL_TRUE)
+		frag_shader->LogCompileInfo("RenderManagerQuads: Vertex ");
+
 	shader_program = new ShaderProgram();
 	glAttachShader(shader_program->GetID(), vert_shader->GetID());
 	glAttachShader(shader_program->GetID(), frag_shader->GetID());
