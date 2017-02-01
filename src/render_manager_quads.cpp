@@ -106,7 +106,7 @@ void RenderManagerQuads::Add(const glm::vec2 &pos, const glm::vec2 &scale)
 	l->scale = scale;
 }
 
-void RenderManagerQuads::Flush()
+void RenderManagerQuads::Flush(const GameTime &gametime)
 {
 	glUseProgram(shader_program->GetID());
 

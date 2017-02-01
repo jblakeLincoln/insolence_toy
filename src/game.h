@@ -14,7 +14,7 @@ struct Game : BaseGameWorld
 
 	void Initialise();
 	void Update(const GameTime &gametime);
-	void Draw();
+	void Draw(const GameTime &gametime);
 	void Unload();
 
 	std::string GetQuadFragShader();

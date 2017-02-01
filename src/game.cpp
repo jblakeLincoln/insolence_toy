@@ -32,9 +32,9 @@ void Game::Update(const GameTime &gametime)
 	camera->lookat.SetPosXY(-window_size.x / 2.f, -window_size.y / 2.f);
 }
 
-void Game::Draw()
+void Game::Draw(const GameTime &gametime)
 {
-	renderer->Flush();
+	renderer->Flush(gametime);
 }
 
 void Game::Unload()
