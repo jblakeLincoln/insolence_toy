@@ -15,8 +15,7 @@ var insolence_loading = document.getElementById("insolence_loading_element");
 var shader_field = CodeMirror.fromTextArea(document.getElementById("shader_field"), {
 	lineNumbers: true,
 	matchBrackets: true,
-	mode: "text/javascript",
-	theme: "default"
+	mode: "text/javascript"
 });
 
 shader_field.setSize(640, 180);
